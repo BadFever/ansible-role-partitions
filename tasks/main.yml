@@ -24,7 +24,7 @@
   lvol:
     vg: "{{ item.vg_name}}"
     lv: "{{ item.lv_name}}"
-    size: "{{ item.size}}"
+    size: "100%VG"
     active: true
     state: present
   with_items: "{{ physical_disks }}"
