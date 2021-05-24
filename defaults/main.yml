@@ -3,5 +3,6 @@ physical_disks:
   - name: "/dev/sdb"
     vg_name: "vg_nfs"
     lv_name: "lv_nfs"
+    size: "50Gib"
     fs_type: "xfs"
     mount_point: ""
