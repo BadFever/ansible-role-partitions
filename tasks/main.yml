@@ -48,7 +48,7 @@
   mount:
     path: "{{ item.mount_point }}"
     src: "/dev/mapper/{{ item.vg_name }}-{{ item.lv_name }}"
-    fs_type: "{{ item.fs_type}}"
+    fstype: "{{ item.fs_type}}"
     opts: rw,nosuid,noexec
     state: mounted
   with_items: "{{ physical_disks }}"
