@@ -42,7 +42,7 @@
     state: directory
     mode: "0755"
   with_items: "{{ physical_disks }}"
-  when: length(item.mount_point) > 0
+  when: item.mount_point | length > 0
 
 - name: Mount the filesystem
   mount:
