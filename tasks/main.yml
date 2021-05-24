@@ -52,4 +52,4 @@
     opts: rw,nosuid,noexec
     state: mounted
   with_items: "{{ physical_disks }}"
-  when: "{{ item.mount_point }} | length > 0
+  when: item.mount_point | length > 0
