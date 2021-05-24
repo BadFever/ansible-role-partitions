@@ -1,0 +1,55 @@
+---
+- name: Ensure parted is installed
+  package:
+    name: parted
+    state: present
+
+- name: Create partitions
+  parted:
+    device: "{{ item.name }}"
+    number: "1"
+    part_type: primary
+    flags: [lvm]
+    state: present
+  with_items: physical_disks
+
+- name: Create volume group
+  lvg:
+    pvs: "{{ item.name }}1"
+    vg: "{{ item.vg_name}}"
+    state: present
+  with_items: physical_disks
+
+- name: Create logical volume
+  lvol:
+    vg: "{{ item.vg_name}}"
+    lv: "{{ item.lv_name}}"
+    size: 100%FREE
+    active: true
+    state: present
+  with_items: physical_disks
+
+- name: Create filesystem
+  filesystem:
+    fstype: "{{ item.fs_type }}"
+    dev: "/dev/mapper/{{ item.vg_name }}-{{ item.lv_name }}"
+    force: no
+  with_items: physical_disks
+
+- name: Create directory as mount point
+  file:
+    path: "{{ item.mount_point }}"
+    state: directory
+    mode: "0755"
+  with_items: physical_disks
+  when: length(item.mount_point) > 0
+
+- name: Mount the filesystem
+  mount:
+    path: "{{ item.mount_point }}"
+    src: "/dev/mapper/{{ item.vg_name }}-{{ item.lv_name }}"
+    fs_type: "{{ item.fs_type}}"
+    opts: rw,nosuid,noexec
+    state: mounted
+  with_items: physical_disks
+  when: length(item.mount_point) > 0

@@ -1,0 +1,7 @@
+---
+physical_disks:
+  - name: "/dev/sdb"
+    vg_name: "vg_nfs"
+    lv_name: "lv_nfs"
+    fs_type: "xfs"
+    mount_point: ""

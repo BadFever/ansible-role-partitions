@@ -1,0 +1,13 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: badfever
+  description: "Creating basic disks and mountpoints"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 1.8
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
